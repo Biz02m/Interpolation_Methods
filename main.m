@@ -3,15 +3,16 @@ clear all;
 close all;
 
 %test
-A = importdata("./profile_wysokosciowe/Obiadek.csv");
-%B = importdata("./profile_wysokosciowe/MountEverest.csv");
-%C = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
+%A = importdata("./profile_wysokosciowe/Obiadek.csv");
+%A = importdata("./profile_wysokosciowe/MountEverest.csv");
+A = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
 startOf = 1;
-endOf = 51
-%endOf = size(A,1);
-n = 20;
+endOf = 100;
+%endOf = size(A.data,1);
+n = 5;
 
-interpolation_nodes = A(startOf:n:endOf, :);
-%lg(interpolation_nodes,A(startOf:endOf, :));
-lagrange(interpolation_nodes, A(startOf:endOf, :));
+interpolation_nodes = A.data(startOf:n:endOf, :);
+interpolatedValues = lagrange(interpolation_nodes, A.data(startOf:endOf, :));
+
+
 splines(A)
