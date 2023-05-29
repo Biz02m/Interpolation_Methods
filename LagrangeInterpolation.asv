@@ -2,15 +2,16 @@
 % Metoda wielomianu lagrange!
 clear all;
 close all;
-A = importdata("./profile_wysokosciowe/GlebiaChallengera.csv");
+%A = importdata("./profile_wysokosciowe/Obiadek.csv");
 %A = importdata("./profile_wysokosciowe/MountEverest.csv");
-%A = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
+A = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
 startOf = 1;
+%endOf = 100;
 endOf = size(A.data,1);
-numberOfInterpolationNodes = 11;
+numberOfInterpolationNodes = 3;
 
 n = floor(endOf/(numberOfInterpolationNodes-1));
-if mod(n,2) == 0
+if(n%2 == 0)
     n = n - 1;
 end
 

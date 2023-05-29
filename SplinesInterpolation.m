@@ -1,13 +1,19 @@
 %Projekt 3
 % Metoda funkcjami sklejanymi 3 stopnia
-
 clear all
 close all
-A = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
+A = importdata("./profile_wysokosciowe/GlebiaChallengera.csv");
+%A = importdata("./profile_wysokosciowe/MountEverest.csv");
+%A = importdata("./profile_wysokosciowe/WielkiKanionKolorado.csv");
+
 startOf = 1;
-%endOf = 80;
 endOf = size(A.data,1);
-n = 20;
+numberOfInterpolationNodes = 25;
+
+n = floor(endOf/(numberOfInterpolationNodes-1));
+if mod(n,2) == 0
+    n = n - 1;
+end
 
 RealData = A.data(startOf:endOf, :);
 interpolationNodes = RealData(startOf:n:endOf, :);
