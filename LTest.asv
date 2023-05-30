@@ -1,7 +1,7 @@
-%Projekt 3
-% Metoda funkcjami sklejanymi 3 stopnia
-clear all
-close all
+%Projekt3
+% Metoda wielomianu lagrange!
+clear all;
+close all;
 Data(1) = importdata("./profile_wysokosciowe/GlebiaChallengera.csv");
 Titles(1) = "Głębia Challengera";
 Data(2) = importdata("./profile_wysokosciowe/SpacerniakGdansk.csv");
@@ -22,25 +22,16 @@ for i = 1:3
     
     RealData = Data(i).data(startOf:endOf, :);
     interpolationNodes = RealData(startOf:n:endOf, :);
+    %indices = [startOf:endOf];
+    %selectIndices = sort(randsample(indices,numberOfInterpolationNodes));
+    %interpolationNodes = RealData(selectIndices,:);
     
-    %RealData = zeros(7, 2);  % Inicjalizacja macierzy 7x2 wypełnionej zerami
-    %for i = 1:7
-    %    RealData(i, 1) = i - 1;  % Wypełnienie pierwszej kolumny wartościami 0-6
-    %end
-    %RealData(2, 2) = 6;
-    %RealData(4,2) = -2
-    %RealData(6,2) = 4;
+    %figure
+    %plot(RealData(:,1),RealData(:,2), LineWidth=5, Color=[0.50 0.50 0.50]), xlabel("Dystans"), ylabel("Wysokość"), title(strcat("Profil wysokościowy - ", Titles(i)))
     
-    %interpolationNodes = zeros(3,2);
-    %interpolationNodes(1,1) = 1;
-    %interpolationNodes(1,2) = 6;
-    %interpolationNodes(2,1) = 3;
-    %interpolationNodes(2,2) = -2;
-    %interpolationNodes(3,1) = 5;
-    %interpolationNodes(3,2) = 4;
-    
-    b = splines(interpolationNodes);
-    interpolatedValues = performSplineInterpolation(interpolationNodes,RealData,b);
+    interpolatedValues = lagrange(interpolationNodes, RealData);
+
+    err = sqrt(sum((RealData(:,2) - interpolatedValues(:,2)).^2)) / numel(RealData(:,2))
     
     xmin = 0;
     xmax = max(RealData(:,1));
@@ -50,5 +41,6 @@ for i = 1:3
     plot(RealData(:,1),RealData(:,2), LineWidth=5, Color=[0.50 0.50 0.50]);
     hold on
     scatter(interpolationNodes(:,1),interpolationNodes(:,2), "cyan");
-    plot(interpolatedValues(:,1), interpolatedValues(:,2)), xlabel("Dystans"), ylabel("Wysokość"), title(strcat("Interpolacja splajnami 3 stopnia - ", Titles(i))), xlim([xmin, xmax]), ylim([ymin, ymax])
+    plot(interpolatedValues(:,1), interpolatedValues(:,2)), xlabel("Dystans"), ylabel("Wysokość"), title(strcat("Interpolacja wielomianem Lagrange - ",Titles(i))), xlim([xmin, xmax]), ylim([ymin, ymax])
+    %saveas(gcf, strcat("LagrangeFewNodes", Titles(i), ".png"))
 end
